@@ -112,7 +112,7 @@ public class Metrics {
      * The plugin configuration file
      */
     private final YamlConfiguration configuration;
-    
+
     /**
      * The plugin configuration file
      */
@@ -243,7 +243,7 @@ public class Metrics {
                                 plugin.getServer().getScheduler().cancelTask(taskId);
                                 taskId = -1;
                                 // Tell all plotters to stop gathering information.
-                                for (Graph graph : graphs){
+                                for (Graph graph : graphs) {
                                     graph.onOptOut();
                                 }
                             }
@@ -273,7 +273,7 @@ public class Metrics {
      * @return true if metrics should be opted out of it
      */
     public boolean isOptOut() {
-        synchronized(optOutLock) {
+        synchronized (optOutLock) {
             try {
                 // Reload the metrics file
                 configuration.load(getConfigFile());
@@ -289,23 +289,23 @@ public class Metrics {
     }
 
     /**
-    * Enables metrics for the server by setting "opt-out" to false in the config file and starting the metrics task.
-    *
-    * @throws IOException
-    */
+     * Enables metrics for the server by setting "opt-out" to false in the config file and starting the metrics task.
+     *
+     * @throws IOException
+     */
     public void enable() throws IOException {
         // This has to be synchronized or it can collide with the check in the task.
         synchronized (optOutLock) {
-        	// Check if the server owner has already set opt-out, if not, set it.
-        	if (isOptOut()) {
-        		configuration.set("opt-out", false);
-        		configuration.save(configurationFile);
-        	}
+            // Check if the server owner has already set opt-out, if not, set it.
+            if (isOptOut()) {
+                configuration.set("opt-out", false);
+                configuration.save(configurationFile);
+            }
 
-        	// Enable Task, if it is not running
-        	if (taskId < 0) {
-        		start();
-        	}
+            // Enable Task, if it is not running
+            if (taskId < 0) {
+                start();
+            }
         }
     }
 
@@ -465,8 +465,8 @@ public class Metrics {
      * </code>
      *
      * @param buffer the stringbuilder to append the data pair onto
-     * @param key the key value
-     * @param value the value
+     * @param key    the key value
+     * @param value  the value
      */
     private static void encodeDataPair(final StringBuilder buffer, final String key, final String value) throws UnsupportedEncodingException {
         buffer.append('&').append(encode(key)).append('=').append(encode(value));
